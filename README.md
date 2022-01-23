@@ -1,5 +1,9 @@
 # Vue js calendar
 
+Vue js calendar for adding and deleting events.
+
+Technologies and Frameworks: Vue Js, Firebase.
+
 ## Project setup
 ```
 npm install
