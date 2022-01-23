@@ -1,4 +1,4 @@
-# azum
+# Vue js calendar
 
 ## Project setup
 ```
