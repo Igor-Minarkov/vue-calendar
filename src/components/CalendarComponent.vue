@@ -112,7 +112,7 @@ export default {
         weekend: true,
         eventMouseEnter: function (args) {
           let desc = args.event._def.extendedProps.desc;
-          if (desc === undefined) {
+          if (desc === undefined || desc === "") {
             desc = "The is no description for this event.";
           }
 
