@@ -1,6 +1,7 @@
 <template>
   <div>
     <FullCalendar :options="calendarOptions" />
+
     <b-modal v-model="modalShow" id="modal-1" title="BootstrapVue">
       <div class="container">
         <div class="row justify-content-center">
@@ -83,6 +84,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import { db } from "../FirebaseConfig";
+import { BPopover } from "bootstrap-vue";
 
 export default {
   components: {
@@ -108,15 +110,28 @@ export default {
         editable: true,
         selectable: true,
         weekend: true,
+        eventMouseEnter: function (args) {
+          let desc = args.event._def.extendedProps.desc;
+
+          new BPopover({
+            propsData: {
+              content: "Event description: " + desc,
+              placement: "auto",
+              boundary: "scrollParent",
+              boundaryPadding: 5,
+              triggers: "hover",
+              html: true,
+              target: args.el,
+            },
+          }).$mount();
+        },
         events: [],
         select: (arg) => {
-          console.log(arg);
           this.modalShow = true;
           (this.newEvent.start = arg.startStr),
             (this.newEvent.end = arg.startStr);
         },
         async eventClick(view) {
-          console.log(view);
           const id = view.event._def.publicId;
           alert(
             "You are about to delete it this event!, but you can always add a new one. Please refresh to see the changes"
@@ -127,11 +142,11 @@ export default {
       eventsBeforeModification: [],
       newEvent: {
         title: "",
-        description: "",
         start: "",
         end: "",
         timestart: "",
         timeend: "",
+        desc: "",
       },
     };
   },
@@ -170,11 +185,13 @@ export default {
         end: endDateWithTime,
         timestart: this.newEvent.timestart,
         timeend: this.newEvent.timeend,
+        desc: this.newEvent.desc,
       });
       this.getEvents();
       this.resetForm();
       this.modalShow = false;
     },
+
     resetForm() {
       Object.keys(this.newEvent).forEach((key) => {
         return (this.newEvent[key] = "");
@@ -206,6 +223,8 @@ export default {
   display: none !important;
 }
 button.close {
-  color: blue;
+  color: #808080;
+  background: white;
+  border-radius: 3px;
 }
 </style>
