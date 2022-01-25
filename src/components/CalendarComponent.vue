@@ -134,7 +134,7 @@ export default {
         async eventClick(view) {
           const id = view.event._def.publicId;
           alert(
-            "You are about to delete it this event!, but you can always add a new one. Please refresh to see the changes"
+            "You are about to delete it this event! but you can always add a new one. Please refresh to see the changes."
           );
           await db.collection("calEvents").doc(id).delete();
         },
