@@ -112,6 +112,9 @@ export default {
         weekend: true,
         eventMouseEnter: function (args) {
           let desc = args.event._def.extendedProps.desc;
+          if (desc === undefined) {
+            desc = "The is no description for this event.";
+          }
 
           new BPopover({
             propsData: {
